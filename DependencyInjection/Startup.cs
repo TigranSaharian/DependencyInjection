@@ -18,15 +18,17 @@ namespace DependencyInjection
         {
             services.AddTransient<IMessageSender, EmailMessageSender>();
             services.AddTransient<TimeService>();
+            services.AddTransient<MessageService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IMessageSender sender, TimeService timeService)
+        public void Configure(IApplicationBuilder app, IMessageSender sender, TimeService timeService, MessageService messageService)
         {
             app.Run(async (context) =>
             {
                 await context.Response.WriteAsync(sender.Send() + "\n");
-                await context.Response.WriteAsync(timeService.GetTime());
+                await context.Response.WriteAsync($"Current time {timeService.GetTime()}" + "\n");
+                await context.Response.WriteAsync(messageService.Send());
             });
         }
     }

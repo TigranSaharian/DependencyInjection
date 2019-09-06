@@ -14,7 +14,7 @@ namespace DependencyInjection.Services
     {
         public string Send()
         {
-            return "The message was sent by Email";
+            return "Message was sent by Email";
         }
     }
 
