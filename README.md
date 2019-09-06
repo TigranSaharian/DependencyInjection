@@ -1,4 +1,4 @@
-# DependencyInjection
+# Dependency Injection
 
 Definition of Dependency Injection C#
 
