@@ -7,7 +7,7 @@
         {
             this.sender = sender;
         }
-        public string Send()
+        public string SendMessage()
         {
             return sender.Send();
         }

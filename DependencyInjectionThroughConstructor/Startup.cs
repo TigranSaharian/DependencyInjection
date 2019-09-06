@@ -1,10 +1,14 @@
-﻿using DependencyInjection.Services;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using DependencyInjection.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DependencyInjection
+namespace DependencyInjectionThroughConstructor
 {
     public class Startup
     {
@@ -13,16 +17,15 @@ namespace DependencyInjection
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IMessageSender, EmailMessageSender>();
-            services.AddTransient<TimeService>();
+            services.AddTransient<MessageService>();
         }
 
-        //This method gets called by the runtime.Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IMessageSender sender, TimeService timeService)
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, MessageService service)
         {
             app.Run(async (context) =>
             {
-                await context.Response.WriteAsync(sender.Send() + "\n");
-                await context.Response.WriteAsync($"Current time {timeService.GetTime()}" + "\n");
+                await context.Response.WriteAsync(service.SendMessage());
             });
         }
     }
